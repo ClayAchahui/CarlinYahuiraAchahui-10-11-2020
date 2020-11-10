@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             x:Class="ToDoList.Views.MainPage"
+             x:Name="appTasks"
+             Title="{Binding Title}">
+
+    <StackLayout 
+        Margin="2">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Entry 
+                Grid.Column="0"
+                Text="{Binding Description}"
+                Placeholder="new task" 
+                HorizontalOptions="FillAndExpand"/>
+            <Button 
+                Grid.Column="1"
+                Command="{Binding AddCommand}"
+                Text="+" />
+        </Grid>
+        <ListView
+            x:Name="lsTasks"
+            RowHeight="50"
+            ItemsSource="{Binding Tasks}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame
+                            Padding="5"
+                            Margin="5">
+                            <StackLayout
+                                Orientation="Horizontal">
+                                <ImageButton
+                                    BackgroundColor="Transparent"
+                                    HorizontalOptions="Start"
+                                    Source="{Binding ImageComplete}"
+                                    Command="{Binding  BindingContext.CompleteCommand,Source={x:Reference appTasks}}" 
+                                    CommandParameter="{Binding .}"/>
+                                <Label
+                                    VerticalTextAlignment="Center"
+                                    Text="{Binding Description}"/>
+                                <ImageButton
+                                    BackgroundColor="Transparent"
+                                    HorizontalOptions="EndAndExpand"
+                                    Source="delete"
+                                    Command="{Binding BindingContext.DeleteCommand,Source={x:Reference appTasks}}"
+                                    CommandParameter="{Binding .}"/>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
